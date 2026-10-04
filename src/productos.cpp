@@ -825,8 +825,7 @@ std::string Productos::gestorProducto::obtenerNombreConId(const int& id){
             productoID = std::stoi(campoId);
 
             if(productoID == id){
-                archivo.close();
-                return campoNom;
+                break;
             }
 
 
@@ -837,7 +836,7 @@ std::string Productos::gestorProducto::obtenerNombreConId(const int& id){
         }
 
         archivo.close();
-
+        return campoNom;
 
 
 
@@ -848,6 +847,69 @@ std::string Productos::gestorProducto::obtenerNombreConId(const int& id){
         std::cout<<"\t\tESE PRODUCTO NO EXISTE"<<std::endl;
         return "ERROR: Producto no encontrado";
     }
+
+
+
+
+}
+
+
+
+std::string Productos::gestorProducto::retornarNombre(const int& id){
+
+
+    std::ifstream archivo("txt/productos.txt");
+
+    std::streampos posicion = busquedaPorId(id);
+
+    if(productoEncontrado(posicion)){
+
+        archivo.seekg(posicion);
+
+        std::string campoId, campoCan, campoCanMin, campoCost, campoPrecDet, campoPrecMayor, campoNom, campoEstado, linea;
+
+        int productoId;
+
+        while(std::getline(archivo,linea)){
+
+            std::stringstream ss(linea);
+
+
+            std::getline(ss,campoId,',');
+            std::getline(ss,campoCan,',');
+            std::getline(ss,campoCanMin,',');
+            std::getline(ss,campoCost,',');
+            std::getline(ss,campoPrecDet,',');
+            std::getline(ss,campoPrecMayor,',');
+            std::getline(ss,campoNom,',');
+            std::getline(ss,campoEstado);
+
+            productoId = std::stoi(campoId);
+
+            if(productoId == id){
+                
+                break;
+                
+            }
+
+
+
+
+
+        }
+
+
+        archivo.close();
+
+        return campoNom;
+
+    }else{
+        std::cout<<"\n\t===============ALERTA================="<<std::endl;
+        std::cout<<"\t\tESE PRODUCTO NO EXISTE"<<std::endl;
+        return "ERROR: Producto no encontrado";
+    }
+
+
 
 
 

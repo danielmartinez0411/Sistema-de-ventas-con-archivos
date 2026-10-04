@@ -24,7 +24,7 @@ int Ventas::gestorVentas::mayorID(){
 
     int id = 0, mayor = 0;
 
-    std::string campoId, campoTotal, campoUsuario, campoEstado, campoProducto, linea;
+    std::string campoId, campoUsuario, campoTotal, campoEstado, campoProducto, linea;
 
     
     while(std::getline(archivo,linea)){
@@ -32,8 +32,8 @@ int Ventas::gestorVentas::mayorID(){
         std::stringstream ss(linea);
 
         std::getline(ss,campoId,',');
-        std::getline(ss,campoTotal,',');
         std::getline(ss,campoUsuario,',');
+        std::getline(ss,campoTotal,',');
         std::getline(ss,campoEstado,',');
         std::getline(ss,campoProducto);
 
@@ -57,11 +57,19 @@ inline int Ventas::gestorVentas::asignarId(){
 
 std::string Ventas::gestorVentas::estadoATexto(ESTADO estado){
 
+    std::string texto;
+
+
     switch(estado){
-        case ESTADO::exitosa : return "Exitosa"; break;
-        case ESTADO::cancelada : return "Cancelada"; break;
+        case ESTADO::exitosa : return texto = "Exitosa"; break;
+        case ESTADO::cancelada : return texto ="Cancelada"; break;
     }
 
+    return texto;
+}
+
+inline bool Ventas::gestorVentas::validarVenta(const std::streampos& posicion){
+    return (posicion == -1) ? false : true;
 }
 
 
@@ -76,30 +84,133 @@ std::string Ventas::gestorVentas::estadoATexto(ESTADO estado){
 */
 
 
-void Ventas::gestorVentas::crearVenta(const Usuarios::Usuario& user){
 
-    std::ofstream archivo("txt/ventas.txt");
+std::streampos Ventas::gestorVentas::busquedaPorId(const int& ventaID){
 
-    int id = asignarId();
+    std::ifstream archivo("txt/ventas.txt");
 
-    Ventas::Venta nuevo(user,ESTADO::exitosa);
+    std::string campoId, campoUsuario, campoTotal, campoEstado, campoProducto, linea;
 
-    archivo << id << "," << nuevo.usuario.nombre << "," << "$" << nuevo.total << "," << estadoATexto(nuevo.estado) << ","; 
+    int id;
 
 
+    while(archivo){
+
+
+        std::streampos posicion = archivo.tellg();
+    
+        std::getline(archivo,linea);
+    
+        std::stringstream ss(linea);
+    
+    
+        std::getline(ss,campoId,',');
+        std::getline(ss,campoUsuario,',');
+        std::getline(ss,campoTotal,',');
+        std::getline(ss,campoEstado,',');
+        std::getline(ss,campoProducto);
+    
+        std::stringstream cambio(campoId);
+
+        cambio >> id;
+    
+        if(ventaID == id){
+            archivo.close();
+            return posicion;
+        }
+
+
+    }    
 
     archivo.close();
+    return -1;
+
+
 }
 
 
-/*
 
-    DUDA: ¿es mejor pasar el nombre del usuario con string o directamente el objeto?
+void Ventas::gestorVentas::crearVenta(const std::string& userNombre, const std::string& userClave){
 
-    porque, si le paso solo el string, lo puedo guardar mejor y en un futuro podria hacerlo mas facil
-    cuando vaya a crear el menu, pero aun no estoy full convencido, lo pensare despues
+    
+    Usuarios::gestorUsuario nuevo;
+    
+    if(nuevo.validarExistencia(userClave,userNombre)){
+        
+        std::ofstream archivo("txt/ventas.txt", std::ios_base::app);
 
-    ¿que elegiste?
+        int id = asignarId();
+
+        archivo << id << "," << userNombre << "," << "$" << 0 << "," << estadoATexto(ESTADO::exitosa); 
+
+        archivo.close();
+
+    }else{
+        std::cout<<"========ERROR: EL USUARIO NO EXISTE======"<<std::endl;
+    }
 
 
-*/
+
+
+
+
+
+}
+
+void Ventas::gestorVentas::agregarProductos(const int& ventasID, const int& productoID){
+
+    std::streampos posicion = busquedaPorId(ventasID);
+
+
+    if(validarVenta(posicion) == true){
+
+        std::ifstream archivoOriginal("txt/ventas.txt");
+        std::ofstream archivoCopia("txt/temporal.txt");
+
+        Productos::gestorProducto gestorNuevo;
+        
+        int id;
+
+        std::string campoId, campoUser, campoTotal, campoEstado, campoProducto, productoNuevo, linea;
+
+        productoNuevo = gestorNuevo.retornarNombre(productoID);
+
+        while(std::getline(archivoOriginal,linea)){
+
+            std::stringstream ss(linea);
+
+            std::getline(ss,campoId,',');
+            std::getline(ss,campoUser,',');
+            std::getline(ss,campoTotal,',');
+            std::getline(ss,campoEstado,',');
+            std::getline(ss,campoProducto);
+
+
+            id = std::stoi(campoId);
+
+            if(id != ventasID){
+                archivoCopia << campoId << "," << campoUser << "," << campoTotal << "," << campoEstado << "," << campoProducto << "\n";
+                std::cout<<campoProducto<<std::endl;
+            }else{
+                archivoCopia << campoId << "," << campoUser << "," << campoTotal << "," << campoEstado << "," <<productoNuevo << "," << campoProducto << "\n";
+                std::cout<<campoProducto<<std::endl;
+            }
+
+
+
+
+        }   
+
+        archivoCopia.close();
+        archivoOriginal.close();
+
+        std::remove("txt/ventas.txt");
+        std::rename("txt/temporal.txt","txt/ventas.txt");
+
+
+    }else{
+        std::cout<<"========ERROR: LA VENTA NO EXISTE======"<<std::endl;
+    }
+
+
+}

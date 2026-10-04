@@ -51,6 +51,8 @@ namespace Ventas{
 
         std::string estadoATexto(ESTADO estado);
 
+        inline bool validarVenta(const std::streampos& posicion);
+
 
         /*
         
@@ -61,7 +63,38 @@ namespace Ventas{
         
         */  
 
-        void crearVenta(const Usuarios::Usuario& user);
+        std::streampos busquedaPorId(const int& ventaID);
+
+        void crearVenta(const std::string& userNombre, const std::string& userClave);
+
+        void agregarProductos(const int& ventaID, const int& productoID);
+
+
+        /*
+        
+        
+        NECESITO CREAR:
+
+        FUNCION QUE CALCULE EL TOTAL, PARA CUANDO VAYA AGREGAR PRODUCTOS
+
+        FUNCIONES QUE RECIBA LA LINEA CAMPOPRODUCTO Y LA DESCONSTRUYA PASO A PASO PARA MOSTRARLA EN PANTALLA
+
+        MOSTRAR LAS VENTAS EN PANTALLA
+
+        MOSTRAR POR ESTADO
+
+        MODIFICAR VENTAS
+
+        MODIFICAR ESTADOS
+
+        ELIMINAR VENTAS
+
+        ETC.
+        
+        
+        
+        
+        */
 
 
 

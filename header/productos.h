@@ -113,6 +113,8 @@ namespace Productos{
 
         std::string obtenerNombreConId(const int& id);
 
+        std::string retornarNombre(const int& id);
+
 
 
 
