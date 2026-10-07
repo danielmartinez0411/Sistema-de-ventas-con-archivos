@@ -122,6 +122,59 @@ std::string Productos::gestorProducto::estadoATexto(const ESTADO& estado){
 
 }
 
+//Precaucion con esta funcion (verificarPrecio), puede que la haya hecho con sueño.
+
+Productos::BUSCAR Productos::gestorProducto::verificarPrecio(const int& id, const float& precio){
+
+    std::ifstream archivo("txt/productos.txt");
+
+    std::streampos posicion = busquedaPorId(id);
+
+    Productos::BUSCAR nuevo;
+
+    float nuevoPrecio;
+
+
+    std::string campoId, campoCan, campoCanMin, campoCost, campoPrecDet, campoPrecMayor, campoNom, campoEstado, linea;
+
+
+    archivo.seekg(posicion);
+
+    while(std::getline(archivo,linea)){
+
+        std::stringstream ss(linea);
+
+        std::getline(ss,campoId,',');
+        std::getline(ss,campoCan,',');
+        std::getline(ss,campoCanMin,',');
+        std::getline(ss,campoCost,',');
+        std::getline(ss,campoPrecDet,',');
+        std::getline(ss,campoPrecMayor,',');
+        std::getline(ss,campoNom,',');
+        std::getline(ss,campoEstado);
+
+        std::stringstream cambio(campoPrecDet);
+
+        cambio >> nuevoPrecio;
+
+        if(precio == nuevoPrecio){
+            nuevo = BUSCAR::precioDetalle;
+            break;
+        }else{
+            nuevo = BUSCAR::precioMayor;
+            break;
+        }
+
+
+    }
+
+    archivo.close();
+    return nuevo;
+
+}
+
+//Creo que esta funcion la hice de balde, revisar despues, tengo sueño.
+
 /*
 =============================================================
 
@@ -911,6 +964,76 @@ std::string Productos::gestorProducto::retornarNombre(const int& id){
 
 
 
+
+
+
+}
+
+
+float Productos::gestorProducto::calcularTotal(const std::string& nombreProducto, const float& total, const BUSCAR& buscar){
+
+    std::ifstream archivo("txt/productos.txt");
+
+    std::string campoId, campoCan, campoCanMin, campoCost, campoPrecDet, campoPrecMayor, campoNom, campoEstado, linea;
+
+    float nuevoTotal = 0;
+
+    while(std::getline(archivo,linea)){
+
+        std::stringstream ss(linea);
+
+        std::getline(ss,campoId,',');
+        std::getline(ss,campoCan,',');
+        std::getline(ss,campoCanMin,',');
+        std::getline(ss,campoCost,',');
+        std::getline(ss,campoPrecDet,',');
+        std::getline(ss,campoPrecMayor,',');
+        std::getline(ss,campoNom,',');
+        std::getline(ss,campoEstado);
+
+        
+
+
+        if(campoNom == nombreProducto){
+            
+            archivo.close();
+
+            switch (buscar){
+                case BUSCAR::precioDetalle :{
+
+                    std::stringstream cambio(campoPrecDet);
+
+                    cambio >> nuevoTotal;
+                    
+                    return total + nuevoTotal; break;
+                } 
+                case BUSCAR::precioMayor :{
+
+
+                    std::stringstream cambio(campoPrecMayor);
+
+                    cambio >> nuevoTotal;
+
+                    return total + nuevoTotal; break;
+                } 
+            
+            }
+
+
+
+        }
+
+
+
+
+
+
+
+    }
+
+
+    archivo.close();
+    return total;
 
 
 

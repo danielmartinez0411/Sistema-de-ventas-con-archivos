@@ -13,7 +13,7 @@ int main(){
 
     nuevo.crearVenta("DAniel","1234567");
 
-    nuevo.agregarProductos(1,1);
+    nuevo.agregarProductos(1,2);
 
    
     

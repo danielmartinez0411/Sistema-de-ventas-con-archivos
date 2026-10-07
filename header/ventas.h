@@ -53,6 +53,8 @@ namespace Ventas{
 
         inline bool validarVenta(const std::streampos& posicion);
 
+        void mostrarProductos(const std::string& campoProductos);
+
 
         /*
         
@@ -68,6 +70,8 @@ namespace Ventas{
         void crearVenta(const std::string& userNombre, const std::string& userClave);
 
         void agregarProductos(const int& ventaID, const int& productoID);
+
+        void mostrarVenta();
 
 
         /*

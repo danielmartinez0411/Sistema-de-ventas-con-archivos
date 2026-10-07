@@ -67,6 +67,8 @@ namespace Productos{
 
         std::string estadoATexto(const ESTADO& estado);
 
+        BUSCAR verificarPrecio(const int& id, const float& precio);
+
         
         /*
         
@@ -114,6 +116,8 @@ namespace Productos{
         std::string obtenerNombreConId(const int& id);
 
         std::string retornarNombre(const int& id);
+
+        float calcularTotal(const std::string& nombreProducto, const float& total, const BUSCAR& buscar);
 
 
 
