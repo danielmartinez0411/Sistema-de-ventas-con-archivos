@@ -77,11 +77,39 @@ void Ventas::gestorVentas::mostrarProductos(const std::string& campoProductos){
 
     std::stringstream ss(campoProductos);
 
+    Productos::gestorProducto nuevo;
+
+    float totalProducto = 0;
+
     while(ss){
 
         std::string nombreProducto;
 
         std::getline(ss,nombreProducto,',');
+
+
+        bool estado = validarPorMayor(nombreProducto);
+
+        if(estado == true){
+            
+            totalProducto = nuevo.retornarTotal(nuevo.obtenerIdConNombre(nombreProducto),Productos::BUSCAR::precioDetalle);
+            
+
+
+        }else{
+
+            totalProducto = nuevo.retornarTotal(nuevo.obtenerIdConNombre(nombreProducto),Productos::BUSCAR::precioMayor);
+            
+        }
+
+
+        std::cout<<"Nombre: "<<nombreProducto<<" Precio: "<<totalProducto<<std::endl;
+
+
+
+
+
+
 
         //Me quede en esta funcion.
         /*
@@ -105,6 +133,37 @@ void Ventas::gestorVentas::mostrarProductos(const std::string& campoProductos){
     }
 
 
+
+}
+
+
+bool Ventas::gestorVentas::validarPorMayor(const std::string& nombreProducto){
+
+    bool estado = false, mayuscula = false;
+    int parentesis = 0;
+
+    for(const auto& n : nombreProducto){
+
+        if(n == '(' || n == ')'){
+            parentesis++;
+        }
+
+        if(n == 'M'){
+            mayuscula = true;
+        }
+
+
+
+
+    }
+
+
+    if(mayuscula == true &&  parentesis == 2){
+        estado = true;
+    }
+
+
+    return estado;
 
 }
 
@@ -193,7 +252,7 @@ void Ventas::gestorVentas::crearVenta(const std::string& userNombre, const std::
 
 }
 
-void Ventas::gestorVentas::agregarProductos(const int& ventasID, const int& productoID){
+void Ventas::gestorVentas::agregarProductos(const int& ventasID, const int& productoID, const PRODUCTO& estado){
 
     std::streampos posicion = busquedaPorId(ventasID);
 
@@ -237,8 +296,16 @@ void Ventas::gestorVentas::agregarProductos(const int& ventasID, const int& prod
 
                 cambio >> nuevoTotal;
 
-                archivoCopia << campoId << "," << campoUser << "," << "$"<<gestorNuevo.calcularTotal(gestorNuevo.obtenerNombreConId(productoID),nuevoTotal,Productos::BUSCAR::precioDetalle) << "," << campoEstado << "," <<productoNuevo << "," << campoProducto << "\n";
-                std::cout<<campoProducto<<std::endl;
+                if(estado == PRODUCTO::alDetalle){
+                    
+                    archivoCopia << campoId << "," << campoUser << "," << " $"<<gestorNuevo.calcularTotal(gestorNuevo.obtenerNombreConId(productoID),nuevoTotal,Productos::BUSCAR::precioDetalle) << "," << campoEstado << "," <<productoNuevo << "," << campoProducto << "\n";
+                    std::cout<<campoProducto<<std::endl;
+
+                }else{
+                    archivoCopia << campoId << "," << campoUser << "," << " $"<<gestorNuevo.calcularTotal(gestorNuevo.obtenerNombreConId(productoID),nuevoTotal,Productos::BUSCAR::precioMayor) << "(M)" << "," << campoEstado << "," <<productoNuevo << "," << campoProducto << "\n";
+                    std::cout<<campoProducto<<std::endl;
+                }
+
             }
 
 

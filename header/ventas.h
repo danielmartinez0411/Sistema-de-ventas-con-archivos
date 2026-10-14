@@ -14,6 +14,13 @@ namespace Ventas{
         cancelada
     };
 
+
+    enum class PRODUCTO{
+        porMayor,
+        alDetalle
+    };
+
+
     struct Venta{
 
         int id = 0;
@@ -55,6 +62,8 @@ namespace Ventas{
 
         void mostrarProductos(const std::string& campoProductos);
 
+        bool validarPorMayor(const std::string& nombreProducto);
+
 
         /*
         
@@ -69,7 +78,7 @@ namespace Ventas{
 
         void crearVenta(const std::string& userNombre, const std::string& userClave);
 
-        void agregarProductos(const int& ventaID, const int& productoID);
+        void agregarProductos(const int& ventaID, const int& productoID, const PRODUCTO& estado);
 
         void mostrarVenta();
 

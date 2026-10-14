@@ -119,6 +119,8 @@ namespace Productos{
 
         float calcularTotal(const std::string& nombreProducto, const float& total, const BUSCAR& buscar);
 
+        float retornarTotal(const int& id, const BUSCAR& estado);
+
 
 
 
