@@ -88,22 +88,31 @@ void Ventas::gestorVentas::mostrarProductos(const std::string& campoProductos){
         std::getline(ss,nombreProducto,',');
 
 
-        bool estado = validarPorMayor(nombreProducto);
+        if(nombreProducto != "," && nombreProducto != ""){
 
-        if(estado == true){
+            bool estadoPorMayor = validarPorMayor(nombreProducto);
+    
             
-            totalProducto = nuevo.retornarTotal(nuevo.obtenerIdConNombre(nombreProducto),Productos::BUSCAR::precioDetalle);
-            
+            if(estadoPorMayor == true){
+
+                std::cout<<"El producto es al detalle"<<std::endl;
+                
+                totalProducto = nuevo.retornarTotal(nuevo.obtenerIdConNombre(nombreProducto),Productos::BUSCAR::precioMayor);
+                
+    
+    
+            }else{
+    
+                totalProducto = nuevo.retornarTotal(nuevo.obtenerIdConNombre(nombreProducto),Productos::BUSCAR::precioDetalle);
+                
+            }
+    
+    
+            std::cout<<"Nombre: "<<nombreProducto<<" Precio: "<<totalProducto<<std::endl;
 
 
-        }else{
-
-            totalProducto = nuevo.retornarTotal(nuevo.obtenerIdConNombre(nombreProducto),Productos::BUSCAR::precioMayor);
-            
         }
 
-
-        std::cout<<"Nombre: "<<nombreProducto<<" Precio: "<<totalProducto<<std::endl;
 
 
 
@@ -236,7 +245,7 @@ void Ventas::gestorVentas::crearVenta(const std::string& userNombre, const std::
 
         int id = asignarId();
 
-        archivo << id << "," << userNombre << "," << "$" << 0 << "," << estadoATexto(ESTADO::exitosa); 
+        archivo << id << "," << userNombre << "," << "$" << 0 << "," << estadoATexto(ESTADO::exitosa) << "\n"; 
 
         archivo.close();
 
@@ -266,7 +275,7 @@ void Ventas::gestorVentas::agregarProductos(const int& ventasID, const int& prod
         
         int id;
 
-        float nuevoTotal = 0;
+        float total = 0;
 
 
         std::string campoId, campoUser, campoTotal, campoEstado, campoProducto, productoNuevo, linea;
@@ -294,15 +303,15 @@ void Ventas::gestorVentas::agregarProductos(const int& ventasID, const int& prod
                 std::stringstream cambio(campoTotal);
 
 
-                cambio >> nuevoTotal;
+                cambio >> total;
 
                 if(estado == PRODUCTO::alDetalle){
                     
-                    archivoCopia << campoId << "," << campoUser << "," << " $"<<gestorNuevo.calcularTotal(gestorNuevo.obtenerNombreConId(productoID),nuevoTotal,Productos::BUSCAR::precioDetalle) << "," << campoEstado << "," <<productoNuevo << "," << campoProducto << "\n";
+                    archivoCopia << campoId << "," << campoUser << "," << "$ "<<gestorNuevo.calcularTotal(gestorNuevo.obtenerNombreConId(productoID),total,Productos::BUSCAR::precioDetalle) << "," << campoEstado << "," <<productoNuevo << "," << campoProducto << "\n";
                     std::cout<<campoProducto<<std::endl;
 
                 }else{
-                    archivoCopia << campoId << "," << campoUser << "," << " $"<<gestorNuevo.calcularTotal(gestorNuevo.obtenerNombreConId(productoID),nuevoTotal,Productos::BUSCAR::precioMayor) << "(M)" << "," << campoEstado << "," <<productoNuevo << "," << campoProducto << "\n";
+                    archivoCopia << campoId << "," << campoUser << "," << "$ "<<gestorNuevo.calcularTotal(gestorNuevo.obtenerNombreConId(productoID),total,Productos::BUSCAR::precioMayor) << "(M)" << "," << campoEstado << "," <<productoNuevo << "," << campoProducto << "\n";
                     std::cout<<campoProducto<<std::endl;
                 }
 
@@ -323,6 +332,45 @@ void Ventas::gestorVentas::agregarProductos(const int& ventasID, const int& prod
     }else{
         std::cout<<"========ERROR: LA VENTA NO EXISTE======"<<std::endl;
     }
+
+
+}
+
+
+
+void Ventas::gestorVentas::mostrarVenta(){
+
+    std::ifstream archivo("txt/ventas.txt");
+
+
+    std::string campoId, campoUser, campoTotal, campoEstado, campoProducto, linea;
+
+    while(std::getline(archivo,linea)){
+
+        std::stringstream ss(linea);
+
+        std::getline(ss,campoId,',');
+        std::getline(ss,campoUser,',');
+        std::getline(ss,campoTotal,',');
+        std::getline(ss,campoEstado,',');
+        std::getline(ss,campoProducto);
+
+
+        std::cout<<"\nVenta ID: "<<campoId<<std::endl;
+        std::cout<<"Nombre Usuario: "<<campoUser<<std::endl;
+        std::cout<<"Precio de la venta: "<<campoTotal<<std::endl;
+        std::cout<<"Estado venta: "<<campoEstado<<std::endl;
+        std::cout<<"\n\tProductos "<<std::endl;
+
+
+        mostrarProductos(campoProducto);
+
+        std::cout<<"\n";
+
+    }
+
+
+    archivo.close();
 
 
 }
