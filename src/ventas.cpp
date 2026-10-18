@@ -6,6 +6,7 @@
 #include <fstream>
 #include <sstream>
 #include <cstdlib>
+#include <vector>
 
 
 /*
@@ -113,32 +114,6 @@ void Ventas::gestorVentas::mostrarProductos(const std::string& campoProductos){
 
         }
 
-
-
-
-
-
-
-
-        //Me quede en esta funcion.
-        /*
-
-            tengo pensado crear una gran funcion que muestre la venta tipo:
-
-            id de venta
-            nombre del vendedor
-
-            productos
-
-            total:
-
-            esta es la parte de mostrar los productos, pero aun estoy medio trancao en como mostraria el precio
-            junto con el nombre, supongo que es por el sueño xd.
-
-        */
-
-
-
     }
 
 
@@ -173,6 +148,94 @@ bool Ventas::gestorVentas::validarPorMayor(const std::string& nombreProducto){
 
 
     return estado;
+
+}
+
+
+int Ventas::gestorVentas::calcularCantidad(const std::string& productos, const int& id){
+
+    int cantidad = 0, prodID;
+
+    std::stringstream ss(productos);
+
+
+    std::string producto, nombre;
+
+    Productos::gestorProducto nuevo;
+
+    while(std::getline(ss,producto,',')){
+
+        nombre = corregirNombre(producto);
+
+        prodID = nuevo.obtenerIdConNombre(nombre);
+
+        std::cout<<"Nombre (calcula cantidad): "<<nombre<<std::endl;
+
+
+
+        if(id == prodID){
+            cantidad++;
+        }
+
+    }
+
+    return cantidad;
+
+}
+
+
+std::vector<std::string> Ventas::gestorVentas::obtenerProductos(const std::string& campoProductos){
+
+    std::vector<std::string> productos;
+
+    std::stringstream ss(campoProductos);
+
+    std::string producto;
+
+
+    bool encontrado = false;
+
+    while(ss){
+
+        std::getline(ss,producto,',');
+
+
+        for(int i = 0; i < productos.size();i++){
+
+            if(productos[i] == producto){
+                encontrado = true;
+            }
+
+
+
+
+        }
+
+
+        if(!encontrado){
+            productos.push_back(producto);
+        }
+
+
+
+    }
+
+
+    return productos;
+
+}
+
+
+std::string Ventas::gestorVentas::corregirNombre(const std::string& nombre){
+
+    std::stringstream ss(nombre);
+
+    std::string nom;
+
+    std::getline(ss,nom,'(');
+
+
+    return nom;
 
 }
 
@@ -371,6 +434,59 @@ void Ventas::gestorVentas::mostrarVenta(){
 
 
     archivo.close();
+
+
+}
+
+
+
+float Ventas::gestorVentas::totalVenta(const std::string& campoProductos){
+
+    float total = 0, precio = 0;
+    int cantidad = 0, id = 0;
+
+    Productos::gestorProducto nuevo;
+
+    bool porMayor = false;
+
+    std::vector<std::string> productos = obtenerProductos(campoProductos);
+
+
+    for(const auto& n : productos){
+
+
+        std::cout<<"Nombre: "<<n<<std::endl;
+
+
+
+        std::string nombre = corregirNombre(n);
+
+        id = nuevo.obtenerIdConNombre(nombre);
+
+        std::cout<<"ID; "<<id<<std::endl;
+
+        cantidad = calcularCantidad(campoProductos,id);
+
+        porMayor = validarPorMayor(n);
+
+        if(porMayor == true){
+            precio = nuevo.retornarTotal(id,Productos::BUSCAR::precioMayor);
+        }else{
+            precio = nuevo.retornarTotal(id,Productos::BUSCAR::precioDetalle);
+        }
+
+        std::cout<<"Producto: "<<n<<" Precio: "<<precio<<" Cantidad: "<<cantidad<<std::endl;
+
+        total += precio * cantidad;
+
+
+
+    }
+
+
+
+
+    return total;
 
 
 }

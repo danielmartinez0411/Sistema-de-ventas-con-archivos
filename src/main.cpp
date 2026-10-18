@@ -13,10 +13,24 @@ int main(){
 
     //nuevo.crearVenta("DAniel","1234567");
 
-    nuevo.agregarProductos(1,2, Ventas::PRODUCTO::alDetalle);
+
+    std::string campo = "Poz,Pozo(M),Poz";
+
+    std::vector<std::string> productos = nuevo.obtenerProductos(campo);
+
+    float total = nuevo.totalVenta(campo);
+
+    for(const auto& n : productos){
+        std::cout<<n<<std::endl;
+    }
+
+    std::cout<<"Total: "<<total<<std::endl;
+    
 
 
-    nuevo.mostrarVenta();
+
+
+
 
     /*Productos::gestorProducto nuevo;
 

@@ -64,25 +64,32 @@ namespace Ventas{
 
         bool validarPorMayor(const std::string& nombreProducto);
 
+        int calcularCantidad(const std::string& productos, const int& id);
 
+        std::vector<std::string> obtenerProductos(const std::string& campoProductos);
+
+        std::string corregirNombre(const std::string& nombre);
+        
+        
         /*
         
-
-            FUNCIONES CLAVE
-
-
+        
+        FUNCIONES CLAVE
+        
+        
         
         */  
-
-        std::streampos busquedaPorId(const int& ventaID);
-
-        void crearVenta(const std::string& userNombre, const std::string& userClave);
-
-        void agregarProductos(const int& ventaID, const int& productoID, const PRODUCTO& estado);
-
-        void mostrarVenta();
-
-
+       
+       std::streampos busquedaPorId(const int& ventaID);
+       
+       void crearVenta(const std::string& userNombre, const std::string& userClave);
+       
+       void agregarProductos(const int& ventaID, const int& productoID, const PRODUCTO& estado);
+       
+       void mostrarVenta();
+       
+       float totalVenta(const std::string& campoProductos);
+       
         /*
         
         
