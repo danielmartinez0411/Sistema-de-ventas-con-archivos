@@ -11,30 +11,17 @@ int main(){
 
     Ventas::gestorVentas nuevo;
 
-    //nuevo.crearVenta("DAniel","1234567");
+    nuevo.crearVenta("DAniel","1234567");
 
 
-    std::string campo = "Poz,Pozo(M),Poz";
-
-    std::vector<std::string> productos = nuevo.obtenerProductos(campo);
-
-    float total = nuevo.totalVenta(campo);
-
-    for(const auto& n : productos){
-        std::cout<<n<<std::endl;
-    }
-
-    std::cout<<"Total: "<<total<<std::endl;
-    
+    nuevo.agregarProductos(1,2,Ventas::PRODUCTO::alDetalle);
 
 
-
-
+    nuevo.mostrarVenta();
 
 
     /*Productos::gestorProducto nuevo;
 
-    nuevo.mostrarProductos();
 
     std::cout<<"\n"<<nuevo.retornarTotal(1,Productos::BUSCAR::precioMayor);
 

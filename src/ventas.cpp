@@ -76,43 +76,40 @@ inline bool Ventas::gestorVentas::validarVenta(const std::streampos& posicion){
 
 void Ventas::gestorVentas::mostrarProductos(const std::string& campoProductos){
 
-    std::stringstream ss(campoProductos);
+    std::string nombre;
+    int cantidad, id;
+    float precio;
+    bool porMayor;
+
 
     Productos::gestorProducto nuevo;
 
-    float totalProducto = 0;
+    std::vector<std::string> productos = obtenerProductos(campoProductos);
 
-    while(ss){
+    for(const auto& n : productos){
 
-        std::string nombreProducto;
+        if(n != "" && n != ","){
 
-        std::getline(ss,nombreProducto,',');
-
-
-        if(nombreProducto != "," && nombreProducto != ""){
-
-            bool estadoPorMayor = validarPorMayor(nombreProducto);
+            nombre = corregirNombre(n);
     
-            
-            if(estadoPorMayor == true){
-
-                std::cout<<"El producto es al detalle"<<std::endl;
-                
-                totalProducto = nuevo.retornarTotal(nuevo.obtenerIdConNombre(nombreProducto),Productos::BUSCAR::precioMayor);
-                
+            id = nuevo.obtenerIdConNombre(nombre);
     
+            cantidad = calcularCantidad(campoProductos,id);
     
+            porMayor = validarPorMayor(n);
+    
+            if(porMayor){
+                precio = nuevo.retornarTotal(id,Productos::BUSCAR::precioMayor);
             }else{
-    
-                totalProducto = nuevo.retornarTotal(nuevo.obtenerIdConNombre(nombreProducto),Productos::BUSCAR::precioDetalle);
-                
+                precio = nuevo.retornarTotal(id,Productos::BUSCAR::precioDetalle);
             }
     
     
-            std::cout<<"Nombre: "<<nombreProducto<<" Precio: "<<totalProducto<<std::endl;
-
+            std::cout<<"\nNombre Producto: "<<nombre<<" Precio: $"<<precio<<" Cantidad: "<<cantidad<<" Sub total: $"<<cantidad*precio<<std::endl;
 
         }
+
+
 
     }
 
@@ -168,8 +165,6 @@ int Ventas::gestorVentas::calcularCantidad(const std::string& productos, const i
         nombre = corregirNombre(producto);
 
         prodID = nuevo.obtenerIdConNombre(nombre);
-
-        std::cout<<"Nombre (calcula cantidad): "<<nombre<<std::endl;
 
 
 
@@ -360,25 +355,22 @@ void Ventas::gestorVentas::agregarProductos(const int& ventasID, const int& prod
 
             if(id != ventasID){
                 archivoCopia << campoId << "," << campoUser << "," << campoTotal << "," << campoEstado << "," << campoProducto << "\n";
-                std::cout<<campoProducto<<std::endl;
             }else{
 
-                std::stringstream cambio(campoTotal);
+                std::stringstream productos;
 
-
-                cambio >> total;
+                productos << productoNuevo << "," << campoProducto;
 
                 if(estado == PRODUCTO::alDetalle){
                     
-                    archivoCopia << campoId << "," << campoUser << "," << "$ "<<gestorNuevo.calcularTotal(gestorNuevo.obtenerNombreConId(productoID),total,Productos::BUSCAR::precioDetalle) << "," << campoEstado << "," <<productoNuevo << "," << campoProducto << "\n";
-                    std::cout<<campoProducto<<std::endl;
+                    archivoCopia << campoId << "," << campoUser << "," << "$ "<<totalVenta(productos.str()) << "," << campoEstado << "," << productos.str() << "\n";
 
                 }else{
-                    archivoCopia << campoId << "," << campoUser << "," << "$ "<<gestorNuevo.calcularTotal(gestorNuevo.obtenerNombreConId(productoID),total,Productos::BUSCAR::precioMayor) << "(M)" << "," << campoEstado << "," <<productoNuevo << "," << campoProducto << "\n";
-                    std::cout<<campoProducto<<std::endl;
+
+                    archivoCopia << campoId << "," << campoUser << "," << " $"<<totalVenta(productos.str()) << "(M)" << "," << campoEstado << "," << productos.str() << "\n";
                 }
 
-            }
+            }   
 
 
 
@@ -454,16 +446,9 @@ float Ventas::gestorVentas::totalVenta(const std::string& campoProductos){
 
     for(const auto& n : productos){
 
-
-        std::cout<<"Nombre: "<<n<<std::endl;
-
-
-
         std::string nombre = corregirNombre(n);
 
         id = nuevo.obtenerIdConNombre(nombre);
-
-        std::cout<<"ID; "<<id<<std::endl;
 
         cantidad = calcularCantidad(campoProductos,id);
 
@@ -474,8 +459,6 @@ float Ventas::gestorVentas::totalVenta(const std::string& campoProductos){
         }else{
             precio = nuevo.retornarTotal(id,Productos::BUSCAR::precioDetalle);
         }
-
-        std::cout<<"Producto: "<<n<<" Precio: "<<precio<<" Cantidad: "<<cantidad<<std::endl;
 
         total += precio * cantidad;
 
