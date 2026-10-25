@@ -56,19 +56,29 @@ namespace Ventas{
 
         inline int asignarId();
 
-        std::string estadoATexto(ESTADO estado);
+        std::string estadoATexto(const ESTADO& estado);
+
+        std::string productoATexto(const PRODUCTO& estado);
+
+        Productos::BUSCAR productoABuscar(const PRODUCTO& estado);
+
+        inline Ventas::PRODUCTO booleanoAProducto(const bool& estado);
 
         inline bool validarVenta(const std::streampos& posicion);
 
-        void mostrarProductos(const std::string& campoProductos);
+        void mostrarProductos(const int& ventaID);
 
-        bool validarPorMayor(const std::string& nombreProducto);
+        int calcularCantidad(const int& ventaId, const int& productoId);
 
-        int calcularCantidad(const std::string& productos, const int& id);
+        std::vector<std::string> obtenerProductos(const int& ventaId);
+        
+        void agregarProductosArchivo(const int& ventaID,const int& productoID, const PRODUCTO& estado);
 
-        std::vector<std::string> obtenerProductos(const std::string& campoProductos);
+        std::streampos validarSiProductoExiste(const int& ventaID, const int& productoID);
 
-        std::string corregirNombre(const std::string& nombre);
+        inline std::string obtenerNombreArchivoVenta(const int& ventaID);
+
+        bool validarSiArchivoExiste(const int& ventaID);
         
         
         /*
@@ -79,27 +89,30 @@ namespace Ventas{
         
         
         */  
-       
-       std::streampos busquedaPorId(const int& ventaID);
-       
        void crearVenta(const std::string& userNombre, const std::string& userClave);
        
        void agregarProductos(const int& ventaID, const int& productoID, const PRODUCTO& estado);
        
        void mostrarVenta();
        
-       float totalVenta(const std::string& campoProductos);
+       float totalVenta(const int& ventaID);
        
-        /*
+       void crearArchivo(const int& id);
+       
+       bool validarPorMayorArchivo(const int& ventaID, const int& productoID);
+
+       void eliminarProducto(const int& ventaID, const int& productoId);
+
+       void eliminarVenta(const int& ventaID);
+       
+       /*
         
         
         NECESITO CREAR:
 
-        FUNCION QUE CALCULE EL TOTAL, PARA CUANDO VAYA AGREGAR PRODUCTOS
+        FUNCION QUE CALCULE EL TOTAL, PARA CUANDO VAYA AGREGAR PRODUCTOS * hecho
 
-        FUNCIONES QUE RECIBA LA LINEA CAMPOPRODUCTO Y LA DESCONSTRUYA PASO A PASO PARA MOSTRARLA EN PANTALLA
-
-        MOSTRAR LAS VENTAS EN PANTALLA
+        MOSTRAR LAS VENTAS EN PANTALLA * hecho
 
         MOSTRAR POR ESTADO
 
@@ -107,7 +120,7 @@ namespace Ventas{
 
         MODIFICAR ESTADOS
 
-        ELIMINAR VENTAS
+        ELIMINAR VENTAS * hecho
 
         ETC.
         
