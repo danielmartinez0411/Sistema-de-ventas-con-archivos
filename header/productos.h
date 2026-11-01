@@ -121,6 +121,8 @@ namespace Productos{
 
         float retornarTotal(const int& id, const BUSCAR& estado);
 
+        int retornarCantidad(const int& id);
+
 
 
 

@@ -1109,3 +1109,53 @@ float Productos::gestorProducto::retornarTotal(const int& id, const BUSCAR& esta
 
 
 }
+
+int Productos::gestorProducto::retornarCantidad(const int& id){
+
+    std::ifstream archivo("txt/productos.txt");
+
+    std::streampos posicion = busquedaPorId(id);
+    
+    if(productoEncontrado(posicion) == true){
+
+
+        archivo.seekg(posicion);
+
+
+        std::string campoId, campoCan, campoCanMin, campoCost, campoPrecDet, campoPrecMayor, campoNom, campoEstado, linea;
+
+        int cantidad;
+        
+        
+        std::getline(archivo,linea);
+
+        std::stringstream ss(linea);
+
+
+        std::getline(ss,campoId,',');
+        std::getline(ss,campoCan,',');
+        std::getline(ss,campoCanMin,',');
+        std::getline(ss,campoCost,',');
+        std::getline(ss,campoPrecDet,',');
+        std::getline(ss,campoPrecMayor,',');
+        std::getline(ss,campoNom,',');
+        std::getline(ss,campoEstado);
+
+        std::stringstream cambio(campoCan);
+
+        cambio >> cantidad;
+
+        return cantidad;
+
+
+
+    }else{
+        std::cout<<"\n\t===============ALERTA================="<<std::endl;
+        std::cout<<"\t\tESE PRODUCTO NO EXISTE"<<std::endl;
+        return -1;
+    }
+
+
+
+
+}
