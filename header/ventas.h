@@ -58,6 +58,8 @@ namespace Ventas{
 
         std::string estadoATexto(const ESTADO& estado);
 
+        ESTADO textoAEstado(const std::string& estado);
+
         std::string productoATexto(const PRODUCTO& estado);
 
         Productos::BUSCAR productoABuscar(const PRODUCTO& estado);
@@ -104,6 +106,10 @@ namespace Ventas{
        void eliminarProducto(const int& ventaID, const int& productoId);
 
        void eliminarVenta(const int& ventaID);
+
+       void mostrarPorEstado(const ESTADO& estado);
+
+       void modificarEstado(const int& ventaID, const ESTADO& nuevoEstado);
        
        /*
         
@@ -114,7 +120,7 @@ namespace Ventas{
 
         MOSTRAR LAS VENTAS EN PANTALLA * hecho
 
-        MOSTRAR POR ESTADO
+        MOSTRAR POR ESTADO * hecho
 
         MODIFICAR VENTAS
 

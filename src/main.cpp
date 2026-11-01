@@ -12,14 +12,22 @@ int main(){
     /*
         funciones a implementar hoy:
 
-        crear archivoProductos *hecho
-        arreglar el mostrarVentas/productos  * hecho
-        Enum class de productos por mayor y detalle * hecho
-        eliminar un articulo * hecho
-        eliminar una venta * hecho
-        Validacion, un articulo no puede ser al detalle y al por mayor a la vez * hecho
-        validacion, que una venta no se cree directamente por agregarProductos * hecho
+        mostrar productos por estado * hecho
+        modificar estado * hecho
+        validacion, el producto tiene una cantidad > 0 o la que se pide
+        agregar productos (agregar cantidad)
+        modificar cantidad
+        vender (agregar cantidad)
 
+
+
+
+        Para las funciones de cantidad, necesito conectar la cantidad dada en productos con la venta
+        asi si tengo 5 papas, en la venta no pueda tener 20 por ejemplo.
+
+        conectartodo validar y ya, al final, ya esto es lo ultimo de ventas.
+
+        claro, tendre que modificar TODAS las funciones para que sigan esa regla.
     
     
     */
@@ -27,15 +35,10 @@ int main(){
 
     Ventas::gestorVentas nuevo;
 
-    nuevo.crearVenta("DAniel","1234567");
+    //nuevo.crearVenta("DAniel","1234567");
 
+    nuevo.agregarProductos(1,1,Ventas::PRODUCTO::alDetalle);
 
-    nuevo.agregarProductos(2,1,Ventas::PRODUCTO::porMayor);
-
-    nuevo.eliminarVenta(3);
-    
-    nuevo.mostrarVenta();
- 
 
     
     return 0;

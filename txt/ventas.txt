@@ -1,2 +1,1 @@
-2,DAniel,Exitosa
-4,DAniel,Exitosa
+1,DAniel,Cancelada

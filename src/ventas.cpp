@@ -69,6 +69,22 @@ std::string Ventas::gestorVentas::estadoATexto(const ESTADO& estado){
     return texto;
 }
 
+Ventas::ESTADO Ventas::gestorVentas::textoAEstado(const std::string& estado){
+
+    ESTADO nuevo;
+
+    if(estado == "Exitosa"){
+        nuevo = ESTADO::exitosa;
+    }else if(estado == "Cancelada"){
+        nuevo =ESTADO::cancelada;
+    }
+
+
+    return nuevo;
+
+
+}
+
 
 std::string Ventas::gestorVentas::productoATexto(const PRODUCTO& estado){
 
@@ -667,5 +683,121 @@ void Ventas::gestorVentas::eliminarVenta(const int& ventaID){
 
 
 
+
+}
+
+void Ventas::gestorVentas::mostrarPorEstado(const ESTADO& estado){
+
+    std::ifstream archivo("txt/ventas.txt");
+
+
+    std::string campoId, campoUser, campoEstado,linea, estadoTexto;
+
+    estadoTexto = estadoATexto(estado);
+
+    bool encontrado = false;
+
+    int id;
+
+    while(std::getline(archivo,linea)){
+
+        std::stringstream ss(linea);
+
+        std::getline(ss,campoId,',');
+        std::getline(ss,campoUser,',');
+        std::getline(ss,campoEstado);
+
+        if(campoEstado == estadoTexto){
+
+            encontrado = true;
+
+            std::cout<<"\nVenta ID: "<<campoId<<std::endl;
+            std::cout<<"Nombre Usuario: "<<campoUser<<std::endl;
+            std::cout<<"Estado venta: "<<campoEstado<<std::endl;
+            std::cout<<"\n\tProductos "<<std::endl;
+            
+            std::stringstream cambio(campoId);
+
+            cambio >> id;
+
+
+            mostrarProductos(id);
+            
+            std::cout<<"\n";
+
+
+        }
+
+
+
+
+
+
+    }
+
+
+    if(!encontrado){
+        std::cout<<"No existen ventas con ese estado"<<std::endl;
+    }
+
+    archivo.close();
+
+}
+
+
+void Ventas::gestorVentas::modificarEstado(const int& ventaID, const ESTADO& nuevoEstado){
+
+    bool existencia = validarSiArchivoExiste(ventaID);
+
+    if(existencia){
+
+        std::ifstream archivoOriginal("txt/ventas.txt");
+        std::ofstream archivoCopia("txt/temporal.txt");
+    
+        std::string campoId, campoUser, campoEstado, linea, id;
+    
+        std::stringstream cambio;
+    
+        cambio << ventaID;
+    
+        cambio >> id;
+    
+    
+        while(std::getline(archivoOriginal,linea)){
+    
+    
+            std::stringstream ss(linea);
+    
+            std::getline(ss,campoId,',');
+            std::getline(ss,campoUser,',');
+            std::getline(ss,campoEstado);
+    
+
+
+            if(campoId == id){
+    
+                archivoCopia << campoId << "," << campoUser << "," << estadoATexto(nuevoEstado) << "\n";
+    
+    
+    
+            }else{
+                archivoCopia << campoId << "," << campoUser << "," << campoEstado << "\n";
+            }
+    
+    
+    
+    
+        }
+    
+        archivoCopia.close();
+        archivoOriginal.close();
+    
+        std::remove("txt/ventas.txt");
+        std::rename("txt/temporal.txt","txt/ventas.txt");
+
+
+    }else{
+        std::cout<<"Modificar Estado dice: No existe la venta"<<std::endl;
+    }
 
 }
