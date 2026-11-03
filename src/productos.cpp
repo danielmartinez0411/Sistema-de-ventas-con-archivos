@@ -1,4 +1,4 @@
-#include <productos.h>
+/*#include <productos.h>
 #include <string>
 #include <iostream>
 #include <fstream>
@@ -18,7 +18,7 @@
 */
 
 
-inline bool Productos::gestorProducto::productoEncontrado(std::streampos posicion){
+/*inline bool Productos::gestorProducto::productoEncontrado(std::streampos posicion){
     return (posicion == -1) ? false : true;
 }
 
@@ -184,7 +184,7 @@ Productos::BUSCAR Productos::gestorProducto::verificarPrecio(const int& id, cons
 
 =============================================================
 */
-
+/*
 
 std::streampos Productos::gestorProducto::busquedaPorId(const int& id){
 
@@ -801,7 +801,7 @@ void Productos::gestorProducto::eliminarProducto(const int& id){
 */
 
 
-
+/*
 
 int Productos::gestorProducto::obtenerIdConNombre(const std::string& nombre){
 
@@ -1158,4 +1158,4 @@ int Productos::gestorProducto::retornarCantidad(const int& id){
 
 
 
-}
+}*/

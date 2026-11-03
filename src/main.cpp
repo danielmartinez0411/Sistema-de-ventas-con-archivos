@@ -1,5 +1,8 @@
+#include "usuarios/validaciones.h"
+#include "usuarios/persistencia.h"
+
 #include <iostream>
-#include <user.h>
+#include <usuarios/user.h>
 #include <productos.h>
 #include <ventas.h>
 #include <string>
@@ -33,13 +36,26 @@ int main(){
     */
 
 
-    Ventas::gestorVentas nuevo;
+    //Ventas::gestorVentas nuevo;
 
     //nuevo.crearVenta("DAniel","1234567");
 
-    nuevo.agregarProductos(1,1,Ventas::PRODUCTO::alDetalle);
+    //nuevo.agregarProductos(1,1,Ventas::PRODUCTO::alDetalle);
 
+    usuarios::persistencia::inicializarArchivo();
 
-    
+    usuarios::Usuario usuario(1,"123123123","DAniel",usuarios::ROL::admin);
+
+    usuarios::persistencia::agregarUsuarioAlArchivo(usuario);
+
+    if(usuarios::persistencia::validarExistenciaUsuario("DAniel","123123123")){
+        std::cout<<"El usuario existe"<<std::endl;
+    }else{
+        std::cout<<"El usuario no existe"<<std::endl;
+    }
+
+    usuarios::persistencia::mostrarUsuarios();
+    usuarios::persistencia::mostrarUsuarios(1);
+
     return 0;
 }

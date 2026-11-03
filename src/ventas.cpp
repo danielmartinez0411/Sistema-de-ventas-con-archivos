@@ -1,4 +1,4 @@
-#include "ventas.h"
+/*#include "ventas.h"
 #include "productos.h"
 #include "user.h"
 #include <string>
@@ -19,7 +19,7 @@
 ================================================================
 */
 
-int Ventas::gestorVentas::mayorID(){
+/*int Ventas::gestorVentas::mayorID(){
 
     std::ifstream archivo("txt/ventas.txt");
 
@@ -333,7 +333,7 @@ FUNCIONES CLAVE
 
 ================================================================
 */
-
+/*
 void Ventas::gestorVentas::crearArchivo(const int& id){
     
     std::string nombre = obtenerNombreArchivoVenta(id);
@@ -800,4 +800,4 @@ void Ventas::gestorVentas::modificarEstado(const int& ventaID, const ESTADO& nue
         std::cout<<"Modificar Estado dice: No existe la venta"<<std::endl;
     }
 
-}
+}*/
