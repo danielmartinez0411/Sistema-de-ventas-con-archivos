@@ -2,7 +2,7 @@
 #include <string>
 
 
-namespace Productos{
+namespace productos{
 
     enum class ESTADO{
         disponible,

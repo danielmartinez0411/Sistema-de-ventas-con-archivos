@@ -3,6 +3,8 @@
 #include <usuarios/auxiliar.h>
 #include <usuarios/serializacion.h>
 #include <usuarios/persistencia.h>
+#include <iostream>
+
 
 int usuarios::gestorUsuario::asignarID(){
     return usuarios::persistencia::mayorID() + 1;
@@ -14,21 +16,20 @@ usuarios::Usuario usuarios::gestorUsuario::crearUsuario(const std::string& nombr
     bool nombreValido = false, claveValida = false, rolValido = false;
 
     usuarios::ROL nuevo = usuarios::auxiliar::convertirEnteroARol(userRol);
-
+    
     if(usuarios::validaciones::validarNombreUsuario(nombre)){
         nombreValido = true;
     }
-
+    
     if(usuarios::validaciones::validarClaveUsuario(clave)){
         claveValida = true;
     }
-
+    
     if(usuarios::validaciones::validarRolUsuario(nuevo)){
         rolValido = true;
     }
 
     if(nombreValido == true && claveValida == true && rolValido == true){
-
         int id = asignarID();
 
 
@@ -48,10 +49,15 @@ bool usuarios::gestorUsuario::agregarUsuario(const Usuario& usuario){
 
     if(usuarios::validaciones::validarUsuario(usuario)){
 
-        estado = true;
 
-        usuarios::persistencia::agregarUsuarioAlArchivo(usuario);
-        
+        if(!usuarios::persistencia::validarExistenciaUsuario(usuario.nombre,usuario.clave)){
+
+            estado = true;
+    
+            usuarios::persistencia::agregarUsuarioAlArchivo(usuario);
+            
+        }
+
     }
 
 
@@ -62,7 +68,7 @@ bool usuarios::gestorUsuario::modificarUsuario(const Usuario& usuario, const std
 
     bool estado = false;
 
-    if(usuarios::validaciones::validarUsuario(usuario)){
+    if(usuarios::validaciones::validarUsuario(usuario) && usuarios::persistencia::validarExistenciaUsuario(usuario.nombre,usuario.clave)){
 
         bool campoValido = false;
 
@@ -118,14 +124,15 @@ bool usuarios::gestorUsuario::modificarUsuario(const Usuario& usuario, const std
 }
 
 
-bool usuarios::gestorUsuario::buscarYObtenerUsuario(const Usuario& user, Usuario& usuario){
+bool usuarios::gestorUsuario::buscarYObtenerUsuario(const int& userID, Usuario& usuario){
 
 
     bool estado = false;
 
-    if(usuarios::validaciones::validarUsuario(user)){
+    if(usuarios::validaciones::validarIdUsuario(userID)){
+        
         estado = true;
-        usuarios::persistencia::buscarYObtenerUsuario(user.id,usuario);
+        usuarios::persistencia::buscarYObtenerUsuario(userID,usuario);
     }
 
     return estado;
@@ -138,7 +145,8 @@ void usuarios::gestorUsuario::mostrarUsuarios(){
 
 void usuarios::gestorUsuario::mostrarUsuarios(const Usuario& usuario){
 
-    if(usuarios::validaciones::validarUsuario(usuario)){
+    if(usuarios::validaciones::validarUsuario(usuario) && usuarios::persistencia::validarExistenciaUsuario(usuario.nombre,usuario.clave)){
+
 
         usuarios::persistencia::mostrarUsuarios(usuario.id);
 
@@ -154,7 +162,7 @@ bool usuarios::gestorUsuario::eliminarUsuario(const Usuario& usuario){
 
     bool estado = false;
 
-    if(usuarios::validaciones::validarUsuario(usuario)){
+    if(usuarios::validaciones::validarUsuario(usuario) && usuarios::persistencia::validarExistenciaUsuario(usuario.nombre,usuario.clave)){
         estado = true;
         usuarios::persistencia::eliminarUsuarioArchivo(usuario.id);
     }

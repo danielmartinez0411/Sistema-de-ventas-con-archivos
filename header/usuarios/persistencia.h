@@ -9,7 +9,7 @@ namespace usuarios{
 
         bool agregarUsuarioAlArchivo(const usuarios::Usuario& usuario);
 
-        bool buscarYObtenerUsuario(const int& id, usuarios::Usuario& usuario);
+        bool buscarYObtenerUsuario(const int& id, Usuario& usuario);
 
         bool eliminarUsuarioArchivo(const int& id);
 

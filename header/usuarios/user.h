@@ -53,7 +53,7 @@ namespace usuarios{
 
             bool modificarUsuario(const Usuario& user, const std::string& modificacion, const CAMPO& campo);
 
-            bool buscarYObtenerUsuario(const Usuario& user, Usuario& usuario);
+            bool buscarYObtenerUsuario(const int& userID, Usuario& usuario);
 
             void mostrarUsuarios();
 

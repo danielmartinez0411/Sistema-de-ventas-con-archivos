@@ -1,6 +1,8 @@
 #include "usuarios/validaciones.h"
+#include "usuarios/auxiliar.h"
 #include <string>
 #include <regex>
+#include <iostream>
 
 bool usuarios::validaciones::validarNombreUsuario(const std::string& nombre){
 
@@ -19,9 +21,10 @@ bool usuarios::validaciones::validarClaveUsuario(const std::string& clave){
         return false;
     }
 
-    if(!validarClaveUsuario(clave)){
+    if(!validarLongitudClave(clave)){
         return false;
     }
+
 
     return patronRegexClave(clave);
 
@@ -41,6 +44,15 @@ bool usuarios::validaciones::validarLongitudClave(const std::string& clave){
 }
 
 
+bool usuarios::validaciones::validarRolUsuario(const int& userRol){
+
+    ROL rol;
+
+    rol = usuarios::auxiliar::convertirEnteroARol(userRol);
+
+    return (rol == ROL::admin || rol == ROL::normal) ? true : false;
+}
+
 bool usuarios::validaciones::validarRolUsuario(const ROL& userRol){
     return (userRol == ROL::admin || userRol == ROL::normal) ? true : false;
 }
@@ -59,7 +71,7 @@ bool usuarios::validaciones::patronRegexNombre(const std::string& nombre){
 
 bool usuarios::validaciones::patronRegexClave(const std::string& clave){
 
-    std::regex patronClave(R"(^[a-zA-Z](?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9_]{5,14}$)");
+    std::regex patronClave(R"(^[a-zA-Z][a-zA-Z0-9_]{5,14}$)");
 
     return std::regex_match(clave,patronClave);
 }

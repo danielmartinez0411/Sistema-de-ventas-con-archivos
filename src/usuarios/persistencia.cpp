@@ -40,7 +40,7 @@ bool usuarios::persistencia::agregarUsuarioAlArchivo(const Usuario& usuario){
     return false;
 }
 
-bool usuarios::persistencia::buscarYObtenerUsuario(const int& id, usuarios::Usuario& usuario){
+bool usuarios::persistencia::buscarYObtenerUsuario(const int& id, Usuario& usuario){
 
     std::ifstream archivo("txt/usuarios.txt");
 
@@ -49,7 +49,7 @@ bool usuarios::persistencia::buscarYObtenerUsuario(const int& id, usuarios::Usua
     while(std::getline(archivo,linea)){
 
         usuarios::Usuario nuevo = usuarios::serializacion::convertirLineaAUsuario(linea);
-
+        
         if(nuevo.id == id){
             usuario = nuevo;
             return true;

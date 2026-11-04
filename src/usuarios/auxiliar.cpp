@@ -9,7 +9,7 @@ std::string usuarios::auxiliar::convertirRolATexto(const ROL& userRol){
     return (userRol == ROL::admin) ? "Admin" : "Normal";
 }
 
-usuarios::ROL convertirEnteroARol(const int& rol){
+usuarios::ROL usuarios::auxiliar::convertirEnteroARol(const int& rol){
     usuarios::ROL nuevo;
 
     nuevo = static_cast<usuarios::ROL>(rol-1);

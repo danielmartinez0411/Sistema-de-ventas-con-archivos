@@ -12,6 +12,8 @@ namespace usuarios{
 
         bool validarLongitudClave(const std::string& clave);
 
+        bool validarRolUsuario(const int& userRol);
+        
         bool validarRolUsuario(const ROL& userRol);
 
         bool validarIdUsuario(const int& id);
