@@ -39,6 +39,18 @@ namespace productos{
             }
 
 
+            Producto(){
+                id = 0;
+                cantidad = 0;
+                cantidadMinima = 0;
+                costo = 0;
+                precioDetalle = 0;
+                precioPorMayor = 0;
+                nombre = "";
+                estado = ESTADO::agotado;
+            }
+
+
     };
 
     class gestorProducto{

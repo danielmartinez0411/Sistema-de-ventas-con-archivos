@@ -2,7 +2,7 @@
 #include <vector>
 #include <string>
 #include "usuarios/user.h"
-#include "productos.h"
+#include "productos/productos.h"
 
 
 
@@ -27,7 +27,7 @@ namespace Ventas{
         //Usuarios::Usuario usuario;
         float total = 0;
         ESTADO estado;
-        std::vector<Productos::Producto> productos;
+        //std::vector<Productos::Producto> productos;
 
 
             //Venta(const Usuarios::Usuario user, const ESTADO& estadoVenta):
@@ -62,7 +62,7 @@ namespace Ventas{
 
         std::string productoATexto(const PRODUCTO& estado);
 
-        Productos::BUSCAR productoABuscar(const PRODUCTO& estado);
+        //Productos::BUSCAR productoABuscar(const PRODUCTO& estado);
 
         inline Ventas::PRODUCTO booleanoAProducto(const bool& estado);
 
