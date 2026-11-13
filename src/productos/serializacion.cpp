@@ -38,3 +38,14 @@ productos::Producto productos::serializacion::convertirLineaAProducto(const std:
 
 
 }
+
+
+std::string productos::serializacion::convertirProductoALinea(const Producto& producto){
+
+    std::stringstream ss;
+
+    ss << producto.id << "," << producto.cantidad << "," << producto.cantidadMinima << "," << producto.costo 
+    << producto.precioDetalle << "," << producto.precioPorMayor << "," << producto.nombre << "," <<productos::auxiliar::estadoATexto(producto.estado) << "\n";
+
+    return ss.str();
+}

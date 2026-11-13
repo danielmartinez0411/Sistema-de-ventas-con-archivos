@@ -11,6 +11,8 @@ namespace productos{
 
         std::string estadoATexto(const ESTADO& estado);
 
+        productos::ESTADO enteroAEstado(const int& estado);
+
     }
 
 

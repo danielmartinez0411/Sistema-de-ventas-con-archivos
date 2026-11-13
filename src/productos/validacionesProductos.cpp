@@ -1,5 +1,5 @@
 #include <productos/validacionesProductos.h>
-#include <usuarios/validaciones.h>
+#include <productos/auxiliarProductos.h>
 #include <iostream>
 #include <regex>
 
@@ -23,20 +23,9 @@ bool productos::validaciones::patronRegexNombreProducto(const std::string& nombr
 
 bool productos::validaciones::validarNombre(const std::string& nombre){
 
-
-    std::cout<<"NOmbre: "<<nombre<<std::endl;
-
     if(nombre.empty()){
         return false;
     }
-
-    if(productos::validaciones::patronRegexNombreProducto(nombre)){
-        std::cout<<"El patron es valido"<<std::endl;
-    }else{
-        
-        std::cout<<"El patron no es valido"<<std::endl;
-    }
-
 
     return productos::validaciones::patronRegexNombreProducto(nombre);
 }
@@ -78,12 +67,173 @@ bool productos::validaciones::validarProducto(const productos::Producto& product
 
    nombreValido = productos::validaciones::validarNombre(producto.nombre);
 
-   std::cout<<"ESTADO VALIDO: "<<estadoValido<<std::endl;
-   std::cout<<"NOMBRE VALIDO: "<<nombreValido<<std::endl;
-   std::cout<<"CANTIDAD VALIDA: "<<cantidadValida<<std::endl;
-
-
    return estadoValido && nombreValido && cantidadValida;
 
 
+}
+
+bool productos::validaciones::validarCampos(const MODIFICAR& campo, const std::string& modificacion){
+
+    bool campoValido = false;
+
+    std::stringstream cambio;
+
+    switch(campo){
+
+        case MODIFICAR::cantidad :{
+
+            int can;
+
+            cambio << modificacion;
+
+            cambio >> can;
+
+
+            campoValido = validarCantidad(can);
+
+            break;
+        }
+
+        case MODIFICAR::cantidadMinima :{
+
+            int canMin;
+
+            cambio << modificacion;
+
+            cambio >> canMin;
+
+
+            campoValido = validarCantidad(canMin);
+
+            break;
+        }
+
+        case MODIFICAR::costo :{
+
+
+            double costo;
+
+            cambio << modificacion;
+
+            cambio >> costo;
+
+
+            campoValido = validarCantidad(costo);
+
+            break;
+        }
+
+        case MODIFICAR::precioDetalle :{
+
+            double precioDet;
+
+            cambio << modificacion;
+
+            cambio >> precioDet;
+
+
+            campoValido = validarCantidad(precioDet);
+
+            break;
+        }
+
+        case MODIFICAR::precioPorMayor :{
+
+            double precMay;
+
+            cambio << modificacion;
+
+            cambio >> precMay;
+
+
+            campoValido = validarCantidad(precMay);
+            
+
+            break;
+        }
+
+        case MODIFICAR::nombre :{
+
+            campoValido = validarNombre(modificacion);
+
+            break;
+        }
+
+        case MODIFICAR::estado :{
+
+            campoValido = validarEstado(productos::auxiliar::convertirTextoAEstado(modificacion));
+
+            break;
+        }
+
+
+
+    }
+
+    return campoValido;
+}
+
+
+bool productos::validaciones::validarModificarEnum(const MODIFICAR& campo){
+
+    bool campoValido = false;
+
+    switch(campo){
+
+        case MODIFICAR::cantidad :{
+
+            campoValido = true;
+
+            break;
+        }
+
+        case MODIFICAR::cantidadMinima :{
+
+            campoValido = true;
+
+            break;
+        }
+
+        case MODIFICAR::costo :{
+
+
+            campoValido = true;
+
+            break;
+        }
+
+        case MODIFICAR::precioDetalle :{
+
+            campoValido = true;
+
+            break;
+        }
+
+        case MODIFICAR::precioPorMayor :{
+
+
+            campoValido = true;
+            
+
+            break;
+        }
+
+        case MODIFICAR::nombre :{
+
+            campoValido = true;
+
+            break;
+        }
+
+        case MODIFICAR::estado :{
+
+            campoValido = true;
+
+            break;
+        }
+
+
+    }
+
+    return campoValido;
 }

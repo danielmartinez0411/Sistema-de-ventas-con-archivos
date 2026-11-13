@@ -24,6 +24,8 @@ namespace usuarios{
 
         bool validarUsuario(const Usuario& usuario);
 
+        bool validarCampos(const CAMPO& campo, const std::string& modificacion);
+
 
     }
 

@@ -1,3 +1,4 @@
+#pragma once
 #include "productos.h"
 #include <string>
 

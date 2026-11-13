@@ -1,22 +1,22 @@
 #pragma once
+#include "productos/productos.h"
+
+namespace productos{
+
+    namespace validacionSemantica{
 
 
-/*
+        bool validarCantidadYCantidadMinima(const int& canMin, const int& can);
 
-Este modulo se encargara de validar que las operaciones tengan sentido
-osea
+        bool validarPrecioDetYPrecioMay(const double& precDet, const double& precMay);
 
-precDet no puede ser menor a precMayor
+        bool validarCostoYPrecio(const double& costo, const double& precioDet, const double& precMay);
 
-o 
-
-costo no puede ser mayor a precDet
-
-por ejmplo
-
-o cantidadMInima no puede ser mayor a cantidad
-
-este modulo se encargara de esas operaciones
+        bool validarLogicaProducto(const Producto& producto);
 
 
-*/
+    }
+
+
+
+}

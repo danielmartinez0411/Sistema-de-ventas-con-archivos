@@ -15,6 +15,16 @@ namespace productos{
         precioMayor
     };
 
+    enum class MODIFICAR{
+        nombre,
+        cantidad,
+        cantidadMinima,
+        costo,
+        precioDetalle,
+        precioPorMayor,
+        estado
+    };
+
     struct Producto{
         int id = 0;
         int cantidad = 0;
@@ -57,85 +67,21 @@ namespace productos{
 
         public:
 
-        /*
-        
-        
-            Funciones Auxiliares
-        
-        
-        
-        
-        */
+        int asignarID();
 
-        inline bool productoEncontrado(std::streampos posicion);
+        Producto crearProducto(const int& can, const int& canMin, const double& costo, const double& precDet, const double& precMay, const std::string& nombre, const int& estadoProducto);
 
-        int mayorID();
+        bool agregarProductoArchivo(const Producto& producto);
 
-        inline int asignarID();
+        bool buscarYObtenerProducto(const int& id, Producto& producto);
 
-        inline ESTADO asignarEstado(const int& can);
+        bool modificarProducto(const int& id, const std::string& modificacion, const MODIFICAR& campo);
 
-        bool validarExistencia(const std::string& nom);
+        bool eliminarProducto(const Producto& producto);
 
-        std::string estadoATexto(const ESTADO& estado);
-
-        BUSCAR verificarPrecio(const int& id, const float& precio);
-
-        
-        /*
-        
-        
-        
-        FUNCIONES CLAVE
-        
-        
-        
-        */
-       
-       std::streampos busquedaPorId(const int& id);
-       
-       void agregarProducto(const int& can, const int& canMin, const double& cost, const double& precDet, const double& precMayor, const std::string& nom);
-       
-       void mostrarProductos();
-       
-       void mostrarProductos(const int& id);
-       
-       void mostrarProductosPrecio(const double& precio, const BUSCAR& busqueda);
-       
-       void mostrarRangoDePrecios(const double& precInicial, const double& precFinal, const BUSCAR& busqueda);
-
-       void busquedaPorNombre(const std::string& nombreProducto);
-
-       void modificarProducto(const int& id, const std::string& campoViejo, const std::string& campoNuevo);
-
-       void eliminarProducto(const int& id);
-
-        /*
-
-            faltan las funciones de enlace / verificaciones de cantidad, estado, etc.
-
-            eliminar productos.
-
-            por el momento solo se me ocurren esas.
-
-            ah, mostrar productos segun el estado, etc
-
-        
-        */
-
-        int obtenerIdConNombre(const std::string& nombre);
-
-        std::string obtenerNombreConId(const int& id);
-
-        std::string retornarNombre(const int& id);
-
-        float calcularTotal(const std::string& nombreProducto, const float& total, const BUSCAR& buscar);
-
-        float retornarTotal(const int& id, const BUSCAR& estado);
-
-        int retornarCantidad(const int& id);
-
-
+        void mostrarProductos();
+    
+        void mostrarProductos(const int& id);
 
 
     };

@@ -13,3 +13,7 @@ bool usuarios::autenticacion::iniciarSesion(const Usuario& user){
 
     return estado;
 }
+
+bool usuarios::autenticacion::esAdmin(const Usuario& user){
+    return (user.rol == usuarios::ROL::admin) ? true : false;
+}

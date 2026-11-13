@@ -31,14 +31,10 @@ usuarios::Usuario usuarios::serializacion::convertirLineaAUsuario(const std::str
 
 std::string usuarios::serializacion::convertirUsuarioALinea(const Usuario& user){
 
-    std::string linea;
-
     std::stringstream ss;
 
     ss << user.id << "," <<user.clave << "," << user.nombre << "," << usuarios::auxiliar::convertirRolATexto(user.rol) << "\n";
 
-    std::getline(ss,linea);
-
-    return linea;
+    return ss.str();
 
 }

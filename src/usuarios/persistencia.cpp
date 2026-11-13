@@ -17,8 +17,6 @@ bool usuarios::persistencia::inicializarArchivo(){
 
         archivoNuevo.close();
 
-        return true;
-
     }
 
     return true;

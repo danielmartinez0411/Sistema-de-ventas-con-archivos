@@ -22,7 +22,9 @@ namespace productos{
 
         bool validarProducto(const Producto& producto);
 
+        bool validarCampos(const MODIFICAR& campo, const std::string& modificacion);
 
+        bool validarModificarEnum(const MODIFICAR& campo);
 
 
     }

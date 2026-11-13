@@ -35,7 +35,7 @@ bool usuarios::validaciones::validarLongitudClave(const std::string& clave){
 
     int cantidad = 0;
 
-    for(const auto& n : clave){
+    for(size_t i = 0; i < clave.size();i++){
         cantidad++;
     }
 
@@ -93,4 +93,46 @@ bool usuarios::validaciones::validarUsuario(const Usuario& usuario){
     }
 
     return (nombreValido == true && rolValido == true && claveValida == true) ? true : false;
+}
+
+bool usuarios::validaciones::validarCampos(const CAMPO& campo, const std::string& modificacion){
+
+    bool campoValido = false;
+
+
+        switch(campo){
+
+            case CAMPO::nombre : {
+
+                if(usuarios::validaciones::validarNombreUsuario(modificacion)){
+                    campoValido = true;
+                }
+
+                break;
+            }
+
+            case CAMPO::clave : {
+                
+                if(usuarios::validaciones::validarClaveUsuario(modificacion)){
+                    campoValido = true;
+                }
+
+                break;
+            }
+
+            case CAMPO::rol : {
+
+
+                if(usuarios::validaciones::validarRolUsuario(usuarios::auxiliar::convertirTextoARol(modificacion))){
+                    campoValido = true;
+                }
+
+                break;
+            }
+
+
+        }
+
+
+    return campoValido;
 }

@@ -70,44 +70,12 @@ bool usuarios::gestorUsuario::modificarUsuario(const Usuario& usuario, const std
 
     if(usuarios::validaciones::validarUsuario(usuario) && usuarios::persistencia::validarExistenciaUsuario(usuario.nombre,usuario.clave)){
 
-        bool campoValido = false;
-
-
-        switch(campo){
-
-            case CAMPO::nombre : {
-
-                if(usuarios::validaciones::validarNombreUsuario(modificacion)){
-                    campoValido = true;
-                }
-
-                break;
-            }
-
-            case CAMPO::clave : {
-                
-                if(usuarios::validaciones::validarClaveUsuario(modificacion)){
-                    campoValido = true;
-                }
-
-                break;
-            }
-
-            case CAMPO::rol : {
-
-
-                if(usuarios::validaciones::validarRolUsuario(usuarios::auxiliar::convertirTextoARol(modificacion))){
-                    campoValido = true;
-                }
-
-                break;
-            }
-
-
-        }
+        bool campoValido =  usuarios::validaciones::validarCampos(campo,modificacion);
 
 
         if(campoValido == true){
+
+            estado = true;
 
             CAMPO nuevo = campo;
 

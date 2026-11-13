@@ -35,3 +35,19 @@ std::string productos::auxiliar::estadoATexto(const ESTADO& estado){
     
     return texto;
 }
+
+productos::ESTADO productos::auxiliar::enteroAEstado(const int& estado){
+
+    productos::ESTADO nuevo;
+
+    switch(estado){
+
+        case 1: nuevo = productos::ESTADO::disponible; break;
+        case 2: nuevo = productos::ESTADO::pocasUnidades; break;
+        case 3: nuevo = productos::ESTADO::agotado; break;
+
+
+    }
+
+    return nuevo;
+}
