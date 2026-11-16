@@ -13,6 +13,8 @@ namespace productos{
 
         productos::ESTADO enteroAEstado(const int& estado);
 
+        productos::MODIFICAR convertirEnteroAMODIFICAR(const int& campo);
+
     }
 
 

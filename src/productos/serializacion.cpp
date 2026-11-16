@@ -44,7 +44,7 @@ std::string productos::serializacion::convertirProductoALinea(const Producto& pr
 
     std::stringstream ss;
 
-    ss << producto.id << "," << producto.cantidad << "," << producto.cantidadMinima << "," << producto.costo 
+    ss << producto.id << "," << producto.cantidad << "," << producto.cantidadMinima << "," << producto.costo << ","
     << producto.precioDetalle << "," << producto.precioPorMayor << "," << producto.nombre << "," <<productos::auxiliar::estadoATexto(producto.estado) << "\n";
 
     return ss.str();

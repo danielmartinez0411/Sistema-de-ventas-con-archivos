@@ -5,6 +5,7 @@
 #include "productos/persistenciaProductos.h"
 #include "productos/serializacion.h"
 #include "productos/auxiliarProductos.h"
+#include "productos/validacionesProductos.h"
 
 
 
@@ -28,11 +29,11 @@ bool productos::persistencia::inicializarArchivo(){
 
 bool productos::persistencia::agregarProductoAlArchivo(const Producto& producto){
 
-    std::ofstream archivo("txt/productos.txt");
+    std::ofstream archivo("txt/productos.txt", std::ios_base::app);
 
     std::string linea = productos::serializacion::convertirProductoALinea(producto);
 
-    if(archivo << linea << "\n"){
+    if(archivo << linea){
         return true;
     }
 
@@ -207,9 +208,9 @@ bool productos::persistencia::modificarProductoArchivo(const int& id, const std:
         Producto nuevo = productos::serializacion::convertirLineaAProducto(linea);
 
         if(nuevo.id != id){
-            archivoCopia << linea << "\n";
+            archivoCopia << linea;
         }else{
-            archivoCopia << modificarSwitch(nuevo,modificacion,campo) << "\n";
+            archivoCopia << modificarSwitch(nuevo,modificacion,campo);
         }
 
 
@@ -288,14 +289,21 @@ void productos::persistencia::mostrarProducto(){
 
         Producto nuevo = productos::serializacion::convertirLineaAProducto(linea);
 
-        std::cout<<"\nID: "<<nuevo.id<<std::endl;
-        std::cout<<"Nombre: "<<nuevo.nombre<<std::endl;
-        std::cout<<"Precio Detalle: $"<<nuevo.precioDetalle<<std::endl;
-        std::cout<<"Precio Por Mayor: $"<<nuevo.precioPorMayor<<std::endl;
-        std::cout<<"Costo: $"<<nuevo.costo<<std::endl;
-        std::cout<<"Cantidad: "<<nuevo.cantidad<<std::endl;
-        std::cout<<"Cantidad Minima: "<<nuevo.cantidadMinima<<std::endl;
-        std::cout<<"Estado: "<<productos::auxiliar::estadoATexto(nuevo.estado)<<std::endl;
+
+        if(productos::validaciones::validarProducto(nuevo)){
+
+            std::cout<<"\nID: "<<nuevo.id<<std::endl;
+            std::cout<<"Nombre: "<<nuevo.nombre<<std::endl;
+            std::cout<<"Precio Detalle: $"<<nuevo.precioDetalle<<std::endl;
+            std::cout<<"Precio Por Mayor: $"<<nuevo.precioPorMayor<<std::endl;
+            std::cout<<"Costo: $"<<nuevo.costo<<std::endl;
+            std::cout<<"Cantidad: "<<nuevo.cantidad<<std::endl;
+            std::cout<<"Cantidad Minima: "<<nuevo.cantidadMinima<<std::endl;
+            std::cout<<"Estado: "<<productos::auxiliar::estadoATexto(nuevo.estado)<<std::endl;
+
+        }
+        
+
 
 
 

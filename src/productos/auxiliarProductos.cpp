@@ -51,3 +51,7 @@ productos::ESTADO productos::auxiliar::enteroAEstado(const int& estado){
 
     return nuevo;
 }
+
+productos::MODIFICAR productos::auxiliar::convertirEnteroAMODIFICAR(const int& campo){
+    return static_cast<productos::MODIFICAR>(campo);
+}

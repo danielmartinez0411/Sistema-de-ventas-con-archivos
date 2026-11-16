@@ -8,6 +8,8 @@ namespace usuarios{
 
         bool iniciarSesion(const Usuario& user);
 
+        bool esAdmin(const Usuario& user);
+
 
 
     }
