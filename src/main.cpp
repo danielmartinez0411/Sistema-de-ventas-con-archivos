@@ -1,38 +1,39 @@
-#include "usuarios/validaciones.h"
-#include "usuarios/persistencia.h"
-#include <productos/serializacion.h>
-#include "productos/auxiliarProductos.h"
-#include "productos/validacionesProductos.h"
-#include "productos/validacionSemantica.h"
 #include <iostream>
-#include "productos/persistenciaProductos.h"
-#include <usuarios/user.h>
-#include <productos/productos.h>
-#include <productos/retornar.h>
-#include "usuarios/retornarUsuario.h"
-#include "usuarios/auxiliar.h"
-#include <ventas.h>
+#include <ventas/serializacionVentas.h>
+#include <ventas/auxiliarVentas.h>
+#include <ventas/ventas.h>
 #include <string>
+
+
 
 
 int main(){
 
+    std::string venta = "1,DAniel,550,Cancelada";
+
+    ventas::Venta nuevaVenta;
+    
+    nuevaVenta = ventas::serializacion::convertirLineaAVenta(venta);
+
+    std::cout<<"ID: "<<nuevaVenta.id<<std::endl;
+    std::cout<<"Nombre: "<<nuevaVenta.usuario.nombre<<std::endl;
+    std::cout<<"total: "<<nuevaVenta.total<<std::endl;
+    std::cout<<"Estado: "<<ventas::auxiliar::convertirEstadoATexto(nuevaVenta.estado)<<std::endl;
+    
+
     /*
     
-    El modulo producto ha sido testeado, no tenia errores.
+        El pequeño modulo ya tiene bugs jajajaja
+        no se esta creando bien la venta.
 
-    entonces ahora comenzare a trabajar con el modulo ventas.
 
-    pendiente:
+        lo mas probable es que tenga que ver en como estoy sacando los datos de ss.
 
-    aprender mas de las excepciones para poder agregarlas cuando vaya trabajando con sistema
+        pero bueno, tengo mucho sueño, me ire a dormir.
     
     
     
     */
-
-
-
 
 
 

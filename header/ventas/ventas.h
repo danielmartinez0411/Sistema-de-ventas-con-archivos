@@ -6,7 +6,7 @@
 
 
 
-namespace Ventas{
+namespace ventas{
 
 
     enum class ESTADO{
@@ -24,14 +24,24 @@ namespace Ventas{
     struct Venta{
 
         int id = 0;
-        //Usuarios::Usuario usuario;
+        usuarios::Usuario usuario;
         float total = 0;
         ESTADO estado;
-        //std::vector<Productos::Producto> productos;
 
 
-            //Venta(const Usuarios::Usuario user, const ESTADO& estadoVenta):
-            //usuario(user), estado(estadoVenta){}
+            Venta(){
+                id = 0;
+                usuario = {};
+                total = 0;
+                estado = ESTADO::cancelada;
+            }
+
+            Venta(const int& ventaID, const usuarios::Usuario& user, const float& totalVenta, const ESTADO& estadoVenta){
+                id = ventaID;
+                usuario = user;
+                total = totalVenta;
+                estado = estadoVenta;
+            }
 
 
 
@@ -64,7 +74,7 @@ namespace Ventas{
 
         //Productos::BUSCAR productoABuscar(const PRODUCTO& estado);
 
-        inline Ventas::PRODUCTO booleanoAProducto(const bool& estado);
+        //inline Ventas::PRODUCTO booleanoAProducto(const bool& estado);
 
         inline bool validarVenta(const std::streampos& posicion);
 
