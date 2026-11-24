@@ -1,5 +1,6 @@
 #include <usuarios/user.h>
 #include <usuarios/funcionalidades.h>
+#include <iostream>
 
 
 
@@ -14,7 +15,6 @@ int usuarios::funcionalidades::obtenerIdConNombre(const std::string& nombreUsuar
         usuarios::Usuario usuario;
 
         nuevo.buscarYObtenerUsuario(i+1,usuario);
-
 
         if(usuario.nombre == nombreUsuario){
 

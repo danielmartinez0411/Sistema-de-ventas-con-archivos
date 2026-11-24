@@ -1,5 +1,6 @@
 #include <string>
 #include <sstream>
+#include <iostream>
 #include <ventas/serializacionVentas.h>
 #include <usuarios/funcionalidades.h>
 #include <ventas/auxiliarVentas.h>
@@ -10,19 +11,22 @@ ventas::Venta ventas::serializacion::convertirLineaAVenta(const std::string& lin
 
     int id = 0;
     float total;
-    std::string nombre, estado;
-    
-    ss >> id;
+    std::string campoNom,campoId,campoTotal,campoEstado,nombre, estado;
 
-    std::getline(ss,nombre,',');
+    std::getline(ss,campoId,',');
+    std::getline(ss,campoNom,',');
+    std::getline(ss,campoTotal,',');
+    std::getline(ss,campoEstado);
 
-    ss >> total >> estado;
+    std::stringstream cambio;
 
+    cambio << campoId << " " << campoNom << " " << campoTotal << " " << campoEstado;
+
+    cambio >> id >> nombre >> total >> estado;
 
     usuarios::Usuario nuevo = usuarios::funcionalidades::obtenerUsuarioConNombre(nombre);
 
     ventas::ESTADO nuevoEstado = ventas::auxiliar::convertirTextoAEstado(estado);
-
 
     ventas::Venta nuevaVenta(id,nuevo,total,nuevoEstado);
 

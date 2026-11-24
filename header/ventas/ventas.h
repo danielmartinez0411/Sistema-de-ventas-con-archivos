@@ -20,6 +20,12 @@ namespace ventas{
         alDetalle
     };
 
+    enum class MODIFICAR{
+        nombreUsuario,
+        totalVenta,
+        estadoVenta
+    };
+
 
     struct Venta{
 
