@@ -54,9 +54,7 @@ bool productos::gestorProducto::agregarProductoArchivo(const Producto& producto)
 
         if(!productos::persistencia::validarExistenciaProducto(producto.nombre)){
 
-            estado = true;
-
-            productos::persistencia::agregarProductoAlArchivo(producto);
+            estado = productos::persistencia::agregarProductoAlArchivo(producto);
 
         }
 
@@ -71,9 +69,7 @@ bool productos::gestorProducto::buscarYObtenerProducto(const int& id, Producto& 
 
     if(productos::validaciones::validarCantidad(id)){
 
-        estado = true;
-
-        productos::persistencia::buscarYObtenerProducto(id,producto);
+        estado = productos::persistencia::buscarYObtenerProducto(id,producto);
 
     }
 
@@ -91,9 +87,7 @@ bool productos::gestorProducto::modificarProducto(const int& id, const std::stri
 
         if(campoValido){
 
-            estado = true;
-
-            productos::persistencia::modificarProductoArchivo(id,modificacion,campo);
+            estado = productos::persistencia::modificarProductoArchivo(id,modificacion,campo);
 
         }
 
@@ -114,8 +108,7 @@ bool productos::gestorProducto::eliminarProducto(const Producto& producto){
 
         if(productos::persistencia::validarExistenciaProducto(producto.nombre)){
             
-            estado = true;
-            productos::persistencia::eliminarProductoArchivo(producto.id);
+            estado = productos::persistencia::eliminarProductoArchivo(producto.id);
         
         }
 

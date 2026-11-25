@@ -6,7 +6,7 @@ namespace usuarios{
 
     namespace autenticacion{
 
-        bool iniciarSesion(const Usuario& user);
+        bool usuarioExiste(const Usuario& user);
 
         bool esAdmin(const Usuario& user);
 

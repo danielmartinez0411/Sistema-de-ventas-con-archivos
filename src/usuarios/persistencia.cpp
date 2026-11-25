@@ -38,6 +38,9 @@ bool usuarios::persistencia::agregarUsuarioAlArchivo(const Usuario& usuario){
     return false;
 }
 
+
+
+
 bool usuarios::persistencia::buscarYObtenerUsuario(const int& id, Usuario& usuario){
 
     std::ifstream archivo("txt/usuarios.txt");
@@ -58,6 +61,9 @@ bool usuarios::persistencia::buscarYObtenerUsuario(const int& id, Usuario& usuar
     archivo.close();
     return false;
 }
+
+
+
 
 bool usuarios::persistencia::eliminarUsuarioArchivo(const int& id){
 

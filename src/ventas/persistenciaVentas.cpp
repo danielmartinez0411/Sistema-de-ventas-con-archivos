@@ -39,7 +39,7 @@ bool ventas::persistencia::agregarVentaArchivo(const Venta& venta){
     std::string linea = ventas::serializacion::convertirVentaALinea(venta);
 
 
-    if(archivo << linea << "\n"){
+    if(archivo << linea){
         return true;
     }
 
@@ -266,4 +266,28 @@ void ventas::persistencia::mostrarVenta(const int& ventaID){
 
     archivo.close();
 
+}
+
+
+int ventas::persistencia::mayorID(){
+
+    std::ifstream archivo("txt/ventas.txt");
+
+    std::string linea;
+
+    int id = 0;
+
+    while(std::getline(archivo,linea)){
+
+        ventas::Venta nuevo = ventas::serializacion::convertirLineaAVenta(linea);
+
+        if(nuevo.id > id){
+            id = nuevo.id;
+        }
+
+    }
+
+
+    archivo.close();
+    return id;
 }

@@ -52,9 +52,7 @@ bool usuarios::gestorUsuario::agregarUsuario(const Usuario& usuario){
 
         if(!usuarios::persistencia::validarExistenciaUsuario(usuario.nombre,usuario.clave)){
 
-            estado = true;
-    
-            usuarios::persistencia::agregarUsuarioAlArchivo(usuario);
+            estado = usuarios::persistencia::agregarUsuarioAlArchivo(usuario);
             
         }
 
@@ -75,11 +73,9 @@ bool usuarios::gestorUsuario::modificarUsuario(const Usuario& usuario, const std
 
         if(campoValido == true){
 
-            estado = true;
-
             CAMPO nuevo = campo;
 
-            usuarios::persistencia::modificarArchivo(usuario.id,modificacion,nuevo);
+            estado = usuarios::persistencia::modificarArchivo(usuario.id,modificacion,nuevo);
 
             return estado;
         }
@@ -99,8 +95,7 @@ bool usuarios::gestorUsuario::buscarYObtenerUsuario(const int& userID, Usuario& 
 
     if(usuarios::validaciones::validarIdUsuario(userID)){
         
-        estado = true;
-        usuarios::persistencia::buscarYObtenerUsuario(userID,usuario);
+        estado = usuarios::persistencia::buscarYObtenerUsuario(userID,usuario);
     }
 
     return estado;
@@ -131,8 +126,7 @@ bool usuarios::gestorUsuario::eliminarUsuario(const Usuario& usuario){
     bool estado = false;
 
     if(usuarios::validaciones::validarUsuario(usuario) && usuarios::persistencia::validarExistenciaUsuario(usuario.nombre,usuario.clave)){
-        estado = true;
-        usuarios::persistencia::eliminarUsuarioArchivo(usuario.id);
+        estado = usuarios::persistencia::eliminarUsuarioArchivo(usuario.id);
     }
 
     return estado;

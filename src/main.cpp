@@ -3,29 +3,38 @@
 #include <ventas/auxiliarVentas.h>
 #include <ventas/ventas.h>
 #include <string>
+#include <ventas/persistenciaVentas.h>
 
 
 
 
 int main(){
 
-    std::string venta = "1,DanielMartinez,550,Cancelada";
+    std::string venta = "2,DanielMartinez,550,Cancelada";
 
     ventas::Venta nuevaVenta;
     
     nuevaVenta = ventas::serializacion::convertirLineaAVenta(venta);
 
-    std::cout<<"ID: "<<nuevaVenta.id<<std::endl;
-    std::cout<<"Nombre: "<<nuevaVenta.usuario.nombre<<std::endl;
-    std::cout<<"total: "<<nuevaVenta.total<<std::endl;
-    std::cout<<"Estado: "<<ventas::auxiliar::convertirEstadoATexto(nuevaVenta.estado)<<std::endl;
 
+    ventas::persistencia::inicializarArchivo();
+
+    ventas::persistencia::agregarVentaArchivo(nuevaVenta);
+
+    ventas::persistencia::mostrarVenta();
+
+    ventas::persistencia::modificarVenta(2,"600",ventas::MODIFICAR::totalVenta);
+
+    ventas::persistencia::mostrarVenta();
+    
     /*
     
-      algunas funciones del modulo ventas (archivo) terminadas.
+      Modulo persistencia probado, sin errores.
 
-      falta probar persistencia. tengo sueño.
-    
+
+      ahora falta probar el gestorVenta (ventaCruda).
+
+      al probarlo y arreglar los errores, entonces comenzare a trabajarCOn los productos.
     
     
     */

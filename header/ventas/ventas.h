@@ -38,7 +38,7 @@ namespace ventas{
             Venta(){
                 id = 0;
                 usuario = {};
-                total = 0;
+                total = -1;
                 estado = ESTADO::cancelada;
             }
 
@@ -59,100 +59,22 @@ namespace ventas{
 
         public:
 
-        /*
+        int asignarID();
+
+        Venta crearVenta(const usuarios::Usuario& usuario, const ESTADO& estado);
+
+        bool agregarVenta(const Venta& venta);
+
+        bool buscarYObtenerVenta(const Venta& ventaOriginal, Venta& venta);
+
+        bool modificarVenta(const Venta& venta, const std::string& modificacion, const MODIFICAR& campo);
+
+        bool eliminarVenta(const Venta& venta);
+
+        void mostrarVentas();
+
+        void mostrarVentas(const Venta& venta);
         
-        
-            FUNCIONES AUXILIARES
-        
-        
-        
-        */
-
-        int mayorID();
-
-        inline int asignarId();
-
-        std::string estadoATexto(const ESTADO& estado);
-
-        ESTADO textoAEstado(const std::string& estado);
-
-        std::string productoATexto(const PRODUCTO& estado);
-
-        //Productos::BUSCAR productoABuscar(const PRODUCTO& estado);
-
-        //inline Ventas::PRODUCTO booleanoAProducto(const bool& estado);
-
-        inline bool validarVenta(const std::streampos& posicion);
-
-        void mostrarProductos(const int& ventaID);
-
-        int calcularCantidad(const int& ventaId, const int& productoId);
-
-        std::vector<std::string> obtenerProductos(const int& ventaId);
-        
-        void agregarProductosArchivo(const int& ventaID,const int& productoID, const PRODUCTO& estado);
-
-        std::streampos validarSiProductoExiste(const int& ventaID, const int& productoID);
-
-        inline std::string obtenerNombreArchivoVenta(const int& ventaID);
-
-        bool validarSiArchivoExiste(const int& ventaID);
-        
-        
-        /*
-        
-        
-        FUNCIONES CLAVE
-        
-        
-        
-        */  
-       void crearVenta(const std::string& userNombre, const std::string& userClave);
-       
-       void agregarProductos(const int& ventaID, const int& productoID, const PRODUCTO& estado);
-       
-       void mostrarVenta();
-       
-       float totalVenta(const int& ventaID);
-       
-       void crearArchivo(const int& id);
-       
-       bool validarPorMayorArchivo(const int& ventaID, const int& productoID);
-
-       void eliminarProducto(const int& ventaID, const int& productoId);
-
-       void eliminarVenta(const int& ventaID);
-
-       void mostrarPorEstado(const ESTADO& estado);
-
-       void modificarEstado(const int& ventaID, const ESTADO& nuevoEstado);
-       
-       /*
-        
-        
-        NECESITO CREAR:
-
-        FUNCION QUE CALCULE EL TOTAL, PARA CUANDO VAYA AGREGAR PRODUCTOS * hecho
-
-        MOSTRAR LAS VENTAS EN PANTALLA * hecho
-
-        MOSTRAR POR ESTADO * hecho
-
-        MODIFICAR VENTAS
-
-        MODIFICAR ESTADOS
-
-        ELIMINAR VENTAS * hecho
-
-        ETC.
-        
-        
-        
-        
-        */
-
-
-
 
     };
 

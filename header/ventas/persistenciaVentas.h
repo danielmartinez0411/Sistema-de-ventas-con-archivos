@@ -23,7 +23,7 @@ namespace ventas{
 
         std::string modificarSwitch(const Venta& venta, const std::string& modificacion, const MODIFICAR& campo);
 
-
+        int mayorID();
     }
 
 

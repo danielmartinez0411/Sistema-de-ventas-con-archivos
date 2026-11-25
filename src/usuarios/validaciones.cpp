@@ -15,6 +15,9 @@ bool usuarios::validaciones::validarNombreUsuario(const std::string& nombre){
 }
 
 
+
+
+
 bool usuarios::validaciones::validarClaveUsuario(const std::string& clave){
 
     if(clave.empty()){
@@ -31,6 +34,9 @@ bool usuarios::validaciones::validarClaveUsuario(const std::string& clave){
 }
 
 
+
+
+
 bool usuarios::validaciones::validarLongitudClave(const std::string& clave){
 
     int cantidad = 0;
@@ -44,6 +50,10 @@ bool usuarios::validaciones::validarLongitudClave(const std::string& clave){
 }
 
 
+
+
+
+
 bool usuarios::validaciones::validarRolUsuario(const int& userRol){
 
     ROL rol;
@@ -53,13 +63,22 @@ bool usuarios::validaciones::validarRolUsuario(const int& userRol){
     return (rol == ROL::admin || rol == ROL::normal) ? true : false;
 }
 
+
+
+
 bool usuarios::validaciones::validarRolUsuario(const ROL& userRol){
     return (userRol == ROL::admin || userRol == ROL::normal) ? true : false;
 }
 
+
+
+
 bool usuarios::validaciones::validarIdUsuario(const int& id){
     return (id > 0) ? true : false;
 }
+
+
+
 
 
 bool usuarios::validaciones::patronRegexNombre(const std::string& nombre){
@@ -69,12 +88,20 @@ bool usuarios::validaciones::patronRegexNombre(const std::string& nombre){
     return std::regex_match(nombre,patronNombre);
 }
 
+
+
+
 bool usuarios::validaciones::patronRegexClave(const std::string& clave){
 
     std::regex patronClave(R"(^[a-zA-Z][a-zA-Z0-9_]{5,14}$)");
 
     return std::regex_match(clave,patronClave);
 }
+
+
+
+
+
 
 bool usuarios::validaciones::validarUsuario(const Usuario& usuario){
 
@@ -94,6 +121,11 @@ bool usuarios::validaciones::validarUsuario(const Usuario& usuario){
 
     return (nombreValido == true && rolValido == true && claveValida == true) ? true : false;
 }
+
+
+
+
+
 
 bool usuarios::validaciones::validarCampos(const CAMPO& campo, const std::string& modificacion){
 

@@ -2,7 +2,7 @@
 #include "usuarios/persistencia.h"
 #include "usuarios/validaciones.h"
 
-bool usuarios::autenticacion::iniciarSesion(const Usuario& user){
+bool usuarios::autenticacion::usuarioExiste(const Usuario& user){
 
     bool estado = false;
 
